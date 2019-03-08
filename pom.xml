@@ -11,6 +11,11 @@
   <properties>
       <!-- This property will be set by the Maven Dependency plugin -->
       <annotatedJdk>${org.checkerframework:jdk8:jar}</annotatedJdk>
+      <sonar.host.url>http://localhost:9090/</sonar.host.url>
+      <sonar.projectName>myapp</sonar.projectName>
+      <sonar.login>admin</sonar.login>
+      <sonar.password>admin</sonar.password>
+
   </properties>
 
   <dependencies>
