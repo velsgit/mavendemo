@@ -8,39 +8,14 @@
   <name>my-app</name>
   <url>http://maven.apache.org</url>
 	
- <profiles>
-    <profile>
-      <id>sonar</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <sonar.host.url>http://localhost:9000</sonar.host.url>
-	<sonar.login>jenkins_user</sonar.login>
-        <sonar.projectName>myapp James</sonar.projectName>
-        <sonar.projectVersion>master</sonar.projectVersion>
-        <sonar.test.exclusions>**/test/**/*.*</sonar.test.exclusions>
-        <sonar.exclusions>**/ai/**/*.*,**/jdbc/**/*.*,**/mpt/**/*.*,**/jcr/**/*.*,**/JDBC*</sonar.exclusions>
-      </properties>
-     </profile>
- </profiles>
+
 
   <properties>
       <!-- This property will be set by the Maven Dependency plugin -->
       <annotatedJdk>${org.checkerframework:jdk8:jar}</annotatedJdk>
-      <sonar.host.url>http://localhost:9090/</sonar.host.url>
-      <sonar.projectName>myapp</sonar.projectName>
-      <sonar.login>admin</sonar.login>
-      <sonar.password>admin</sonar.password>
-
   </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.sonarsource.scanner.maven</groupId>
-      <artifactId>sonar-maven-plugin</artifactId>
-      <version>3.3</version>
-    </dependency>	  
+  <dependencies>	  
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
