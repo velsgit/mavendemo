@@ -8,10 +8,10 @@ pipeline{
         steps {
           withSonarQubeEnv('Sonar_server') {
              sh 'mvn clean package sonar:sonar' +
-             '-Dsonar.projectKey = javapipe' +
-             '-Dsonar.Name = javadeclarativepipe' +
-             '-Dsonar.login = keshav' +
-             '-Dsonar.password = Keshav@123' 
+             '-sonar.projectKey = javapipe' +
+             '-sonar.Name = javadeclarativepipe' +
+             '-sonar.login = keshav' +
+             '-sonar.password = Keshav@123' 
           }
         }
       }
