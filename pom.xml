@@ -13,8 +13,10 @@
   <properties>
       <!-- This property will be set by the Maven Dependency plugin -->
       <annotatedJdk>${org.checkerframework:jdk8:jar}</annotatedJdk>
-  
-      
+      <sonar.host.url>http://127.0.0.1:8008</sonar.host.url>
+      <sonar.projectKey>javapipe</sonar.projectKey>
+      <sonar.projectName>declarativepipe</sonar.projectName>
+   
   </properties>
 
   <dependencies>	  
