@@ -3,11 +3,11 @@ pipeline{
   stages{
       stage('Sonarqube Analysis') {
         environment {
-           scannerHome = tool 'SonarQubeScanner'
+           scannerHome = tool 'SonarQube Scanner'
         }
         steps {
-          withSonarQubeEnv('sonarqube') {
-             sh "${scannerHome}/bin/sonar-scanner"
+          withSonarQubeEnv('Sonar_server') {
+             sh 'mvn clean package sonar:sonar'
           }
         }
       }
