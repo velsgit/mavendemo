@@ -2,8 +2,7 @@ pipeline{
   agent any
   environment 
     {
-        REGION = 'us-west-2'
-        
+        REGION = 'us-west-2'        
         VERSION = 'latest'
         PROJECT = 'tap_sample'
         IMAGE = 'demo:latest'
@@ -28,7 +27,7 @@ pipeline{
                 script
                 {
                     // Build the docker image using a Dockerfile
-                    docker.build("$IMAGE","examples/pipelines/TAP_docker_image_build_push_ecr")
+                    docker.build("$IMAGE",".")
                 }
             }
         }
