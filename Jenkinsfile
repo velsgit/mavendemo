@@ -20,7 +20,8 @@ pipeline{
                     sh "sed 's!will!appcom!g' pom.xml" 
                     //sh "login="(aws ecr get-login --no-include-email --region us-east-2)" | sed 's/https:\/\// /'"
                     //sh "eval $login"
-                    sh "eval ${(aws ecr get-login --no include-email --region us-east-2)}"
+                    //sh "eval ${(aws ecr get-login --no include-email --region us-east-2)}"
+                    sh("eval \$(aws ecr get-login --no-include-email | sed 's|https://||')")
                     docker.build("$IMAGE",".")
                     sh "docker tag demo:latest 630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER"
                     sh "docker push 630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER"
