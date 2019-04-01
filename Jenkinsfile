@@ -10,16 +10,6 @@ pipeline{
         ECRCRED = 'ecr:eu-central-1:tap_ecr'
     }
   stages{
-      stage('Sonarqube Analysis'){
-        environment {
-           scannerHome = tool 'SonarQube Scanner'
-        }
-        steps {
-          withSonarQubeEnv('Sonar_server') {
-             sh 'mvn sonar:sonar'               
-          }
-        }
-      }
       stage('Docker build')
         {
             steps
