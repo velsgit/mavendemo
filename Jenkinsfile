@@ -18,7 +18,7 @@ pipeline{
                 {
                     // Build the docker image using a Dockerfile
                     sh "sed 's!will!appcom!g' pom.xml"
-                    login="$(aws ecr get-login --no-include-email --region us-east-2)"
+                    sh "login="$(aws ecr get-login --no-include-email --region us-east-2)""
                     sh "sed 's/https:\/\// /' <<<"$login""
                     sh ("eval "$login"")
                     docker.build("$IMAGE",".")
