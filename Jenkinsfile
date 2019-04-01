@@ -17,8 +17,8 @@ pipeline{
                 script
                 {
                     // Build the docker image using a Dockerfile                                     
-                    sh "sed 's!will!appcom!g' pom.xml"                    
-                    sh("eval \$(aws ecr get-login --no-include-email | sed 's|https://||')")
+                    sh "sed 's!will!appcom!g' pom.xml" 
+                    sh "eval "$(aws ecr get-login --no-include-email --region us-west-2) | sed 's/https:\/\// /'""
                     docker.build("$IMAGE",".")
                     sh "docker tag demo:latest 630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER"
                     sh "docker push 630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER"
