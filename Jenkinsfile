@@ -17,6 +17,7 @@ pipeline{
                 script
                 {
                     // Build the docker image using a Dockerfile
+                    sh "aws --version"
                     sh "sed 's!will!appcom!g' pom.xml"
                     sh "login="$(aws ecr get-login --no-include-email --region us-east-2)""
                     sh "sed 's/https:\/\// /' <<<"$login""
