@@ -19,10 +19,8 @@ pipeline{
                     // Build the docker image using a Dockerfile
                     sh "temp=aws --version"
                     sh "echo "temp""                 
-                    sh "sed 's!will!appcom!g' pom.xml"
-                    sh "login="$(aws ecr get-login --no-include-email --region us-east-2)""
-                    sh "sed 's/https:\/\// /' <<<"$login""
-                    sh ("eval "$login"")
+                    sh "sed 's!will!appcom!g' pom.xml"                    
+                    sh("eval \$(aws ecr get-login --no-include-email | sed 's|https://||')")
                     docker.build("$IMAGE",".")
                 }
             }
