@@ -34,7 +34,7 @@ pipeline{
                     docker.build("$IMAGE",".")
                     sh "docker tag demo:latest 630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER"
                     //sh "docker push 630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER"
-                    docker.withRegistry(ECRURL, awscred)
+                    docker.withRegistry('630578467060.dkr.ecr.us-east-2.amazonaws.com/demo', 'awscred')
                     {
                         docker.image(IMAGE).push()
                     }
