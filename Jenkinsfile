@@ -34,7 +34,7 @@ pipeline{
                     docker.build("demo:$BUILD_NUMBER",".")
                     //sh "docker tag demo:latest 630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER"
                     //sh "docker push 630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER"
-                    docker.withRegistry("https://630578467060.dkr.ecr.us-east-2.amazonaws.com/demo, "ecr:us-east-2:4e98734b-6e1b-4025-9b36-9886838b99ce") {
+                    docker.withRegistry("https://630578467060.dkr.ecr.us-east-2.amazonaws.com/demo", "ecr:us-east-2:4e98734b-6e1b-4025-9b36-9886838b99ce") {
                        sh "docker tag demo:latest 630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER"
                        docker.image("demo").push()
                     }
