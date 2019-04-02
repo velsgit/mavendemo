@@ -33,7 +33,7 @@ pipeline{
                     //sh" ./demo.sh"                    
                     docker.build("$IMAGE",".")
                     sh "docker tag demo:latest 630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER"
-                    withDockerRegistry(credentialsId: 'ecr:us-east-2:3b07bdf7-ab7e-4ca1-907a-83dbcfcc37fa', url: '630578467060.dkr.ecr.us-east-2.amazonaws.com/demo')
+                    docker.withRegistry(credentialsId: 'ecr:us-east-2:3b07bdf7-ab7e-4ca1-907a-83dbcfcc37fa', url: '630578467060.dkr.ecr.us-east-2.amazonaws.com/demo')
                     {
                        sh "docker push 630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER"
                     }
