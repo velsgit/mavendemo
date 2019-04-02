@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y apache2
 ADD . /home/Documents/
 ENV APACHE_RUN_USER www-data
 ENV APACHE_LOG_DIR /var/log/apache2
-
+ENV APCHE_RUN_GROUP www-data
 EXPOSE 80
 
 
