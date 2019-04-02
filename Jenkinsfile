@@ -28,15 +28,13 @@ pipeline{
                     //sh "login="(aws ecr get-login --no-include-email --region us-east-2)" | sed 's/https:\/\// /'"
                     //sh "eval $login"
                     //sh "eval ${(aws ecr get-login --no include-email --region us-east-2)}"
-                    //sh("eval \$(aws ecr get-login --no-include-email --region us-east-2 | sed 's|https://||') > demo.sh")
-                    //sh" chmod 777 ./demo.sh"
-                    //sh" ./demo.sh"                    
+                    sh("eval \$(aws ecr get-login --no-include-email --region us-east-2 | sed 's|https://||') > demo.sh")
+                    sh" chmod 777 ./demo.sh"
+                    sh" ./demo.sh"                    
                     docker.build("$IMAGE",".")
                     sh "docker tag demo:latest 630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER"
-                    docker.withRegistry(credentialsId: 'ecr:us-east-2:3b07bdf7-ab7e-4ca1-907a-83dbcfcc37fa', url: '630578467060.dkr.ecr.us-east-2.amazonaws.com/demo')
-                    {
-                       sh "docker push 630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER"
-                    }
+                    sh "docker push 630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER"
+                    
                 } 
             }
         }
