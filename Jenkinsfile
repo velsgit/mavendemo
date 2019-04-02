@@ -10,6 +10,13 @@ pipeline{
         ECRCRED = 'ecr:eu-central-1:tap_ecr'
     }
   stages{
+      stage('build project')
+      {
+        steps
+        {
+          sh "mvn clean install"
+        }
+      }
       stage('Docker build')
         {
             steps
