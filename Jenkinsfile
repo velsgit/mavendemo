@@ -35,20 +35,7 @@ pipeline{
                     
                 } 
             }
-            stage('ecs deploy')
-            {
-              environment 
-              {                  
-                   REGION=us-east-2
-                   REPOSITORY_NAME=demo
-                   CLUSTER="democluster"
-                   FAMILY=app-dev-pvt
-                   NAME=app-dev-pvt
-                   SERVICE_NAME="app-dev-pvt"
-              }
-              steps
-              {
-                sh "SERVICES=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .failures[]`" 
-        }
+            
+        
   }
  }
