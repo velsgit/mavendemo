@@ -1,14 +1,21 @@
-# getting base image ubuntu 
-FROM ubuntu:12.04
-# this is optional
+FROM ubuntu:16.04
+
+# File Author / Maintainer
 MAINTAINER keshav
 
-RUN apt-get update && apt-get install -y apache2
+# Update the repository sources list
+RUN apt-get update
 
-ADD . /home/Documents/
-ENV APACHE_RUN_USER www-data
-ENV APACHE_LOG_DIR /var/log/apache2
+# Install and run apache
+RUN apt-get install -y apache2
+
+#ENTRYPOINT ["/usr/sbin/apache2", "-k", "start"]
+
+
+#ENV APACHE_RUN_USER www-data
+#ENV APACHE_RUN_GROUP www-data
+#ENV APACHE_LOG_DIR /var/log/apache2
+
 EXPOSE 80
 
-
-CMD ["usr/sbin/apache2", "-D","FOREGROUND"]
+CMD apachectl -D FOREGROUND
