@@ -50,7 +50,7 @@ pipeline{
            }
            steps
            {
-              sh "aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION}| jq .repositories[].repositoryUri"
+              def REPOSITORY_URI=sh "aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION}| jq .repositories[].repositoryUri"
            }
         }     
   }
