@@ -53,6 +53,7 @@ pipeline{
              script
              {               
                 def REPOSITORY_URI=sh "aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION}"
+                sh "sed -e "s;%BUILD_NUMBER%;${BUILD_NUMBER};g" -e "s;%REPOSITORY_URI%;${REPOSITORY_URI};g" taskdef.json > ${NAME}-v_${BUILD_NUMBER}.json"
              } 
            }
         }     
