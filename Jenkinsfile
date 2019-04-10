@@ -37,5 +37,21 @@ pipeline{
             }
             
         }
+        stage('Deploy Ecr')
+        {
+           environment {
+              
+              REGION=us-east-2
+              REPOSITORY_NAME=demo
+              CLUSTER="samplecluster"
+              FAMILY=sampletaskdefinition
+              NAME=app-dev-pvt
+              SERVICE_NAME="sampleservice"
+           }
+           steps
+           {
+             def REPOSITORY_URI=`aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION} | jq .repositories[].repositoryUri | tr -d '"'`
+           }
+        }     
   }
  }
