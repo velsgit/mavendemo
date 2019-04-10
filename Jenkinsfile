@@ -50,7 +50,7 @@ pipeline{
            }
            steps
            {
-             sh "REPOSITORY_URI='aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION} | jq .repositories[].repositoryUri | tr -d '"''"
+             def REPOSITORY_URI= aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION}
            }
         }     
   }
