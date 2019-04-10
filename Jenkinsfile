@@ -41,11 +41,11 @@ pipeline{
         {
            environment {
               
-              REGION=us-east-2
-              REPOSITORY_NAME=demo
+              REGION="us-east-2"
+              REPOSITORY_NAME="demo"
               CLUSTER="samplecluster"
-              FAMILY=sampletaskdefinition
-              NAME=app-dev-pvt
+              FAMILY="sampletaskdefinition"
+              NAME=app-"sampletaskdefinition"
               SERVICE_NAME="sampleservice"
            }
            steps
