@@ -50,7 +50,7 @@ pipeline{
            }
            steps
            {
-              REPOSITORY_URI= sh "aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION}"
+              REPOSITORY_URI= "sh "aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION}""
            }
         }     
   }
