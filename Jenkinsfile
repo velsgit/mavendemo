@@ -57,8 +57,7 @@ pipeline{
                 def SERVICES=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .failures[]")
                 sh (script:"aws ecs register-task-definition --family ${FAMILY} --network-mode bridge --region ${REGION} --container-definitions ("[
                   {
-                    "name":"app-up-pvt",
-                    "hostname":"app-up-pvt",
+                    
                     "portMappings":[{"hostPort":8989,"protocol":"tcp","containerPort":80}],
                     "cpu":128,
                     "memoryReservation":512,
