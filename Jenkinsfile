@@ -55,7 +55,7 @@ pipeline{
                 def REPOSITORY_URI=sh (script:"aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION} | jq .repositories[].repositoryUri")
                 //sh "sed -e "s;%BUILD_NUMBER%;${BUILD_NUMBER};g" -e "s;%REPOSITORY_URI%;${REPOSITORY_URI};g" taskdef.json > ${NAME}-v_${BUILD_NUMBER}.json"
                 def SERVICES=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .failures[]")
-                sh "aws ecs register-task-definition --family ${FAMILY} --network-mode bridge --region ${REGION} --container-definitions "[{"portMappings":[{"hostPort":8989,"protocol":"tcp","containerPort":80}],"cpu":128,"memoryReservation":512,"image":"630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER","essential":true,"hostname":"app-up-pvt","name":"app-up-pvt"}]"
+                sh (script:"aws ecs register-task-definition --family ${FAMILY} --network-mode bridge --region ${REGION} --container-definitions "[{"portMappings":[{"hostPort":8989,"protocol":"tcp","containerPort":80}],"cpu":128,"memoryReservation":512,"image":"630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER","essential":true,"hostname":"app-up-pvt","name":"app-up-pvt"}]")
                 def REVISION=sh (script:"aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | jq .taskDefinition.revision")
              } 
            }
