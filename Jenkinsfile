@@ -45,12 +45,12 @@ pipeline{
               REPOSITORY_NAME="demo"
               CLUSTER="samplecluster"
               FAMILY="sampletaskdefinition"
-              NAME=app-"sampletaskdefinition"
+              NAME="sampletaskdefinition"
               SERVICE_NAME="sampleservice"
            }
            steps
            {
-             def REPOSITORY_URI= sh "aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION}"
+              REPOSITORY_URI= sh "aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION}"
            }
         }     
   }
