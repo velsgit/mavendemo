@@ -29,6 +29,7 @@ pipeline{
                        //docker.build("demo:$BUILD_NUMBER",".")
                        def customImage = docker.build("demo:$BUILD_NUMBER")
                        //sh "docker tag demo:latest 630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER"
+                       echo "$customImage
                        //docker.image("demo").push()
                        customImage.push()
                     }
