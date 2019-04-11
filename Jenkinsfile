@@ -53,7 +53,7 @@ pipeline{
            {
              script
              {               
-                REPOSITORY_URI= sh (script:"aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION} | jq .repositories[].repositoryUri | sed 's/\"/ /g' ",returnStdout: true).trim()
+                REPOSITORY_URI= sh (script:"aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION} | jq .repositories[].repositoryUri | sed 's/\"//g' ",returnStdout: true).trim()
                 echo"$REPOSITORY_URI"
                 //SEMICOLON=':'
                 //IMAGE_UR=sh(script:"$REPOSITORY_URI:${BUILD_NUMBER}")
