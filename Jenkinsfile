@@ -53,7 +53,7 @@ pipeline{
              script
              {               
                 def REPOSITORY_URI=sh (script:"aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION} | jq .repositories[].repositoryUri")
-                sh "sed "s;%image%;${REPOSITORY_URI};g" taskdef.json > ${NAME}-v_${BUILD_NUMBER}.json"
+               sh "sed '/image/ s/347029939449 .*/${REPOSITORY_URI}/' taskdef.json > ${NAME}-v_${BUILD_NUMBER}.json"
                 sh "aws ecs register-task-definition  --family ${FAMILY} --region ${REGION} --network-mode bridge --cli-input-json file://${WORKSPACE}/${NAME}-v_${BUILD_NUMBER}.json"
                 def SERVICES=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .failures[]")
                 //def task=sh (script:"aws ecs register-task-definition --family ${FAMILY} --network-mode bridge --region ${REGION} --container-definitions "[{"name":"app-up-pvt","hostname":"app-up-pvt","portMappings":[{"hostPort":8989,"protocol":"tcp","containerPort":80}],"cpu":128,"memoryReservation":512,"image":"630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER","essential":true}]")
