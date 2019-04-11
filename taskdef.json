@@ -2,9 +2,9 @@
     
     "containerDefinitions": [
         {
-            "image": "",
-            "name": "",
-            "cpu": 122,
+            "image": "630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER"",
+            "name": "app-up-pvt",
+            "cpu": 128,
             "memory": 512,
             "essential": true,
             "portMappings": [
