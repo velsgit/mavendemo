@@ -8,13 +8,13 @@ pipeline{
           sh "mvn clean install"
         }
       }
-      stage('Docker build')
+      stage('Docker Push')
         {
             steps
             {
                 script
                 {
-                    // Build the docker image using a Dockerfile                                     
+                                                    
                     sh "sed 's!will!appcom!g' pom.xml" 
                     //sh "login="(aws ecr get-login --no-include-email --region us-east-2)" | sed 's/https:\/\// /'"
                     //sh "eval $login"
@@ -55,11 +55,11 @@ pipeline{
              {               
                 REPOSITORY_URI= sh (script:"aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION} | jq .repositories[].repositoryUri | sed 's/\"/ /g' ",returnStdout: true).trim()
                 echo"$REPOSITORY_URI"
-                UNDERSCORE=':'
-                //IMAGE_UR=sh(script:"$REPOSITORY_URI$UNDERSCORE${BUILD_NUMBER}")
-                 IMAGE_UR="630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:277"
+                //SEMICOLON=':'
+                //IMAGE_UR=sh(script:"$REPOSITORY_URI:${BUILD_NUMBER}")
+                 IMAGE_UR = REPOSITORY_URI+":"+BUILD_NUMBER
                 echo "hi $IMAGE_UR"
-                sh "sed -i -e '/image/ s/630578467060 .*/ $IMAGE_UR/' taskdef.json > ${NAME}-v_${BUILD_NUMBER}.json"
+                sh "sed -i -e 's/630578467060 .*/ $IMAGE_UR/' taskdef.json > ${NAME}-v_${BUILD_NUMBER}.json"
                 sh "aws ecs register-task-definition  --family ${FAMILY} --region ${REGION} --network-mode bridge --cli-input-json file://${WORKSPACE}/${NAME}-v_${BUILD_NUMBER}.json"
                 SERVICES=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .failures[]")
                 //def task=sh (script:"aws ecs register-task-definition --family ${FAMILY} --network-mode bridge --region ${REGION} --container-definitions "[{"name":"app-up-pvt","hostname":"app-up-pvt","portMappings":[{"hostPort":8989,"protocol":"tcp","containerPort":80}],"cpu":128,"memoryReservation":512,"image":"630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER","essential":true}]")
