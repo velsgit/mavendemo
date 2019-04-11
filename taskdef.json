@@ -2,7 +2,7 @@
     
     "containerDefinitions": [
         {
-            "image": "630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER",
+            "image": "630578467060.dkr.ecr.us-east-2.amazonaws.com/demo",
             "name": "app-up-pvt",
             "cpu": 128,
             "memory": 512,
