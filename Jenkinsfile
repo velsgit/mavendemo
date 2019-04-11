@@ -54,7 +54,7 @@ pipeline{
              {               
                 def REPOSITORY_URI= sh (script:"aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION} | jq .repositories[].repositoryUri | sed 's/\"/ /g' ",returnStdout: true).trim()
                 UNDERSCORE=':'
-                def IMAGE_URI= sh (script:"$REPOSITORY_URI$UNDERSCORE${BUILD_NUMBER}",returnStdout: true)
+                def IMAGE_URI= sh "$REPOSITORY_URI$UNDERSCORE${BUILD_NUMBER}"
                 echo "hi $IMAGE_URI"
                 sh "sed -i -e '/image/ s/630578467060 .*/ $IMAGE_URI/' taskdef.json > ${NAME}-v_${BUILD_NUMBER}.json"
                 sh "aws ecs register-task-definition  --family ${FAMILY} --region ${REGION} --network-mode bridge --cli-input-json file://${WORKSPACE}/${NAME}-v_${BUILD_NUMBER}.json"
