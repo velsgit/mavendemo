@@ -81,7 +81,7 @@ pipeline{
                 else
                 {
                   echo "entered new service"
-                  sh "aws ecs describe-clusters --cluster getting-started"
+                  sh "aws ecs describe-clusters --cluster ${CLUSTER} --region ${REGION}"
                   sh "aws ecs create-service --service-name ${SERVICE_NAME} --desired-count 0 --task-definition ${FAMILY} --cluster ${CLUSTER} --region ${REGION}"
                 }
                  
