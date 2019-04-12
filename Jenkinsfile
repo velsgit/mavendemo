@@ -61,7 +61,7 @@ pipeline{
                 sh "sed -e 's!630578467060.dkr.ecr.us-east-2.amazonaws.com/demo!$IMAGE_UR!g' taskdef.json > ${NAME}-v_${BUILD_NUMBER}.json"
                 sh "aws ecs register-task-definition  --family ${FAMILY} --region ${REGION} --network-mode bridge --cli-input-json file://${WORKSPACE}/${NAME}-v_${BUILD_NUMBER}.json"
                 //aws ecs register-task-definition  --family linux --region us-east-2 --network-mode bridge --cli-input-json file://taskdef.json
-                SERVICES=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq services[].runningCount",returnStdout: true)
+                SERVICES=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .services[].runningCount",returnStdout: true)
                 echo "service $SERVICES"
                 string REVISION=sh (script:"aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | jq .taskDefinition.revision",returnStdout: true)
                 //REVISION_STRING= Integer.toString("$REVISION")
