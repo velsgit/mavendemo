@@ -64,7 +64,7 @@ pipeline{
                 SERVICES=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .failures[]",returnStdout: true)
                 echo "service $SERVICES"
                 REVISION=sh (script:"aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | jq .taskDefinition.revision",returnStdout: true)
-                REVISION_STRING= "$REVISION".toString()
+                REVISION_STRING= Integer.toString("$REVISION")
                 echo "revision $REVISION"
                 if("$SERVICES" == "")               
                 {
