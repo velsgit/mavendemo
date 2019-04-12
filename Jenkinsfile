@@ -64,6 +64,7 @@ pipeline{
                 SERVICES=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .failures[]",returnStdout: true)
                 echo "service $SERVICES"
                 REVISION=sh (script:"aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | jq .taskDefinition.revision",returnStdout: true)
+                REVISION_STRING= $REVISION.toString()
                 echo "revision $REVISION"
                 if("$SERVICES" == "")               
                 {
@@ -72,7 +73,7 @@ pipeline{
                  echo "desrire $DESIRED_COUNT"
                  //if("$DESIRED_COUNT" == 0)
                    // DESIRED_COUNT="1"
-                 cmd = '''aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT}'''
+                 cmd = '''aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION_STRING} --desired-count ${DESIRED_COUNT}'''
                  echo "$cmd"
                  sh "$cmd" 
                  sh "aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .services[].desiredCount"
