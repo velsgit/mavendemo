@@ -73,7 +73,7 @@ pipeline{
                  echo "desrire $DESIRED_COUNT"
                  if("$DESIRED_COUNT" == 0)
                     DESIRED_COUNT="1"
-                 sh "aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT}"
+                 sh "aws ecs update-service --cluster ${CLUSTER} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT} --region ${REGION}"
                  //cmd = '''aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:"${REVISION}" --desired-count "${DESIRED_COUNT}" '''
                  //echo "$cmd"
                  //sh "$cmd" 
