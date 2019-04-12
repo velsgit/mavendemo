@@ -54,20 +54,29 @@ pipeline{
              script
              {               
                 REPOSITORY_URI= sh (script:"aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION} | jq .repositories[].repositoryUri | sed 's/\"//g' ",returnStdout: true).trim()
-                echo"$REPOSITORY_URI"
-                //SEMICOLON=':'
+                echo"repo $REPOSITORY_URI"
                 //IMAGE_UR=sh(script:"$REPOSITORY_URI:${BUILD_NUMBER}")
-                 IMAGE_UR =REPOSITORY_URI+":"+BUILD_NUMBER
-                echo "hi $IMAGE_UR"
+                IMAGE_UR =REPOSITORY_URI+":"+BUILD_NUMBER
+                echo "image $IMAGE_UR"
                 sh "sed -e 's!630578467060.dkr.ecr.us-east-2.amazonaws.com/demo!$IMAGE_UR!g' taskdef.json > ${NAME}-v_${BUILD_NUMBER}.json"
                 sh "aws ecs register-task-definition  --family ${FAMILY} --region ${REGION} --network-mode bridge --cli-input-json file://${WORKSPACE}/${NAME}-v_${BUILD_NUMBER}.json"
-                    //aws ecs register-task-definition  --family linux --region us-east-2 --network-mode bridge --cli-input-json file://taskdef.json
+                //aws ecs register-task-definition  --family linux --region us-east-2 --network-mode bridge --cli-input-json file://taskdef.json
                 SERVICES=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .failures[]")
-                echo "$SERVICES"
-                //def task=sh (script:"aws ecs register-task-definition --family ${FAMILY} --network-mode bridge --region ${REGION} --container-definitions "[{"name":"app-up-pvt","hostname":"app-up-pvt","portMappings":[{"hostPort":8989,"protocol":"tcp","containerPort":80}],"cpu":128,"memoryReservation":512,"image":"630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:$BUILD_NUMBER","essential":true}]")
-                //def task =sh (script:"aws ecs register-task-definition --family linux --network-mode bridge --region us-east-2 --container-definitions "[{\"portMappings\":[{\"hostPort\":8989,\"protocol\":\"tcp\",\"containerPort\":80}],\"cpu\":128,\"memoryReservation\":512,\"image\":\"630578467060.dkr.ecr.us-east-2.amazonaws.com/demo:196\",\"essential\":true,\"hostname\":\"app-dev-pvt\",\"name\":\"app-dev-pvt\"}]""
+                echo "service $SERVICES"
                 REVISION=sh (script:"aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | jq .taskDefinition.revision")
-                echo "$REVISION"
+                echo "revision $REVISION"
+                if($SERVICES == "")               
+               {
+                 echo "entered existing service"
+                 DESIRED_COUNT=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .services[].desiredCount")
+                 echo "desrire $DESIRED_COUNT"
+                 if($DESIRED_COUNT == 0)
+                    DESIRED_COUNT="1"
+                 sh"aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT}"
+                 sh"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .services[].desiredCount"
+               }
+                 
+                 
              } 
            }
         }     
