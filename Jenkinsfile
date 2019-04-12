@@ -69,7 +69,7 @@ pipeline{
                 if("$SERVICES" == "")               
                 {
                  echo "entered existing service"
-                 DESIRED_COUNT=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .services[].desiredCount",returnStdout: true)
+                 string DESIRED_COUNT=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .services[].desiredCount",returnStdout: true)
                  echo "desrire $DESIRED_COUNT"
                  //if("$DESIRED_COUNT" == 0)
                    // DESIRED_COUNT="1"
