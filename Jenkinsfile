@@ -65,8 +65,8 @@ pipeline{
                 echo "service $SERVICES"
                 REVISION=sh (script:"aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | jq .taskDefinition.revision",returnStdout: true)
                 echo "revision $REVISION"
-                if($SERVICES == "")               
-               {
+                if("$SERVICES" == "")               
+                {
                  echo "entered existing service"
                  DESIRED_COUNT=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .services[].desiredCount",returnStdout: true)
                  echo "desrire $DESIRED_COUNT"
