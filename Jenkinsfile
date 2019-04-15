@@ -2,13 +2,13 @@
 pipeline{
   agent any
   stages{
-      stage('build project')
-      {
-        steps
-        {
-          sh "mvn clean install"
-        }
-      }
+      ///stage('build project')
+      ///{
+       // steps
+        //{
+         // sh "mvn clean install"
+        //}
+      //}
       stage('Docker Push')
         {
             steps
@@ -16,9 +16,9 @@ pipeline{
                 script
                 {
                                                     
-                    sh "sed 's!will!appcom!g' pom.xml" 
-                    sh "login = sudo aws ecr get-login --no-include-email --region us-east-2"
-                    sh "eval $login"
+                    //sh "sed 's!will!appcom!g' pom.xml" 
+                    //sh "login = sudo aws ecr get-login --no-include-email --region us-east-2"
+                    //sh "eval $login"
                     //sh "eval ${(aws ecr get-login --no include-email --region us-east-2)}"
                     //sh("eval \$(aws ecr get-login --no-include-email --region us-east-2 | sed 's|https://||') > demo.sh")
                     //sh" chmod 777 ./demo.sh"
@@ -35,6 +35,9 @@ pipeline{
                        //docker.image("demo").push()
                        //customImage.push()
                     //}
+                    docker.withRegistry('https://630578467060.dkr.ecr.us-east-2.amazonaws.com/demo', 'ecr:us-east-2:4e98734b-6e1b-4025-9b36-9886838b99ce') {
+                      docker.image('demo').push('$BUILD_NUMBER')
+                    }
                     
                 } 
             }
