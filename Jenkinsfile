@@ -69,8 +69,11 @@ pipeline{
                 if("$SERVICES" == "")               
                 {
                  echo "entered existing service"
-                 DESIRED_COUNT=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .services[].desiredCount",returnStdout: true)
-                 echo "desrire $DESIRED_COUNT"
+                 //DESIRED_COUNT=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .services[].desiredCount",returnStdout: true)
+                 DESIRED_COUNT= sh """#!/bin/bash
+                                     aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region us-east-2 | grep 'desiredCount' | awk '{print $2}' |  cut -f1 -d',' | head -n 1
+                                   """                                    
+                 echo "desrire$DESIRED_COUNTvalue"
                  if("$DESIRED_COUNT" == 0)
                     DESIRED_COUNT="1"
                  sh "aws ecs update-service --cluster ${CLUSTER} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT} --region ${REGION}"
