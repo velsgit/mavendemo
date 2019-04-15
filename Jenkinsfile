@@ -71,7 +71,7 @@ pipeline{
                  echo "entered existing service"
                  //DESIRED_COUNT=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .services[].desiredCount",returnStdout: true)
                  DESIRED_COUNT= sh """#!/bin/bash
-                                     aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region us-east-2 | grep 'desiredCount' | awk '{print $2}' |  cut -f1 -d',' | head -n 1
+                                     aws ecs describe-services --services $SERVICE_NAME --cluster $CLUSTER --region us-east-2 | grep 'desiredCount' | awk '{print $2}' |  cut -f1 -d',' | head -n 1
                                    """                                    
                  echo "desrire$DESIRED_COUNTvalue"
                  if("$DESIRED_COUNT" == 0)
