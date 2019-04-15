@@ -41,63 +41,6 @@ pipeline{
             }
             
         }
-        stage('Deploy Ecr')
-        {
-           environment {
-              
-              REGION="us-east-2"
-              REPOSITORY_NAME="demo"
-              CLUSTER="samplecluster"
-              FAMILY="app-up-pvt"
-              NAME="app-up-pvt"
-              SERVICE_NAME="sampleservice"
-           }
-           steps
-           {
-             script
-             {               
-                REPOSITORY_URI= sh (script:"aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION} | jq .repositories[].repositoryUri | sed 's/\"//g' ",returnStdout: true).trim()
-                echo"repo $REPOSITORY_URI"
-                //IMAGE_UR=sh(script:"$REPOSITORY_URI:${BUILD_NUMBER}")
-                IMAGE_UR =REPOSITORY_URI+":"+BUILD_NUMBER
-                echo "image $IMAGE_UR"
-                sh "sed -e 's!630578467060.dkr.ecr.us-east-2.amazonaws.com/demo!$IMAGE_UR!g' taskdef.json > ${NAME}-v_${BUILD_NUMBER}.json"
-                sh "aws ecs register-task-definition  --family ${FAMILY} --region ${REGION} --network-mode bridge --cli-input-json file://${WORKSPACE}/${NAME}-v_${BUILD_NUMBER}.json"
-                //aws ecs register-task-definition  --family linux --region us-east-2 --network-mode bridge --cli-input-json file://taskdef.json
-                SERVICES=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .failures[]",returnStdout: true)
-                echo "service $SERVICES"
-                REVISION=sh (script:"aws ecs describe-task-definition --task-definition ${NAME} --region ${REGION} | jq .taskDefinition.revision",returnStdout: true)
-                //REVISION_STRING= Integer.toString("$REVISION")
-                echo "revision $REVISION"
-                if("$SERVICES" == "")               
-                {
-                 echo "entered existing service"
-                 //DESIRED_COUNT=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .services[].desiredCount",returnStdout: true)
-                 //DESIRED_COUNT= sh """#!/bin/bash
-                 //                    aws ecs describe-services --services $SERVICE_NAME --cluster $CLUSTER --region us-east-2 | grep 'desiredCount' | awk '{print $2}' |  cut -f1 -d',' | head -n 1
-                 //                 """                                    
-                 def JSONResponse = sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION}",returnStdout: true)
-                 def json = new JsonSlurper().parseText(JSONResponse)
-                 def DESRIRED_COUNT = json.'services[].desiredCount'
-                  echo "desrire${DESIRED_COUNT}value"
-                 if("$DESIRED_COUNT" == 0)
-                    DESIRED_COUNT="1"
-                 sh "aws ecs update-service --cluster ${CLUSTER} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT} --region ${REGION}"
-                  
-                 //cmd = '''aws ecs update-service --cluster ${CLUSTER} --region ${REGION} --service ${SERVICE_NAME} --task-definition ${FAMILY}:"${REVISION}" --desired-count "${DESIRED_COUNT}" '''
-                 //echo "$cmd"
-                 //sh "$cmd" 
-                 //sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .services[].desiredCount")
-                }
-                else
-                {
-                  echo "entered new service"
-                  sh "aws ecs describe-clusters --cluster ${CLUSTER} --region ${REGION}"
-                  sh "aws ecs create-service --service-name sample --desired-count 0 --task-definition ${FAMILY} --cluster ${CLUSTER} --region ${REGION}"
-                }
-                 
-             } 
-           }
-        }     
+         
   }
  }
