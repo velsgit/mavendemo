@@ -1,6 +1,5 @@
 
 pipeline{
-  import groovy.json.JsonSlurper
   agent any
   stages{
       stage('build project')
