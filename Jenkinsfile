@@ -17,7 +17,7 @@ pipeline{
                 {
                                                     
                     sh "sed 's!will!appcom!g' pom.xml" 
-                    login =sh "(script:aws ecr get-login --no-include-email --region us-east-2",returnStdout: true)
+                    sh "login = aws ecr get-login --no-include-email --region us-east-2"
                     sh "eval $login"
                     //sh "eval ${(aws ecr get-login --no include-email --region us-east-2)}"
                     //sh("eval \$(aws ecr get-login --no-include-email --region us-east-2 | sed 's|https://||') > demo.sh")
