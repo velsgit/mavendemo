@@ -34,7 +34,7 @@ pipeline{
                        //echo "$customImage"
                        //docker.image("demo").push()
                        //customImage.push()
-                    }
+                    //}
                     
                 } 
             }
