@@ -77,7 +77,7 @@ pipeline{
                  def JSONResponse = sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION}",returnStdout: true)
                  def json = new JsonSlurper().parseText(JSONResponse)
                  def DESRIRED_COUNT = json.'services[].desiredCount'
-                 echo "desrire$DESIRED_COUNTvalue"
+                  echo "desrire${DESIRED_COUNT}value"
                  if("$DESIRED_COUNT" == 0)
                     DESIRED_COUNT="1"
                  sh "aws ecs update-service --cluster ${CLUSTER} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT} --region ${REGION}"
