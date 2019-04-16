@@ -2,18 +2,13 @@
 pipeline{
   agent any
   stages{
-      //stage('build project')
-      //{
-        //steps
-        //{
-          //script
-          //{            
-            //def NUM= ${BUILD_NUMBER}-1
-            //echo "Value is ${NUM}this"
-            //sh "mvn clean install"
-          //}
-        //}
-      //}
+      stage('build project')
+      {
+        steps
+        {         
+          sh "mvn clean install"          
+        }
+      }
       stage('Docker Push')
         {
             steps
