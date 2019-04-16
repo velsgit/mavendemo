@@ -21,7 +21,7 @@ pipeline{
                 script
                 {
                      NUM1= BUILD_NUMBER
-                     echo "NUM1"
+                     echo "Hello $NUM1"
                      Value= 1
                      NUM2= NUM1-Value
                      //echo "num $NUM"  
