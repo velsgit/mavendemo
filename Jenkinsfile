@@ -60,11 +60,11 @@ pipeline{
               SERVICE_NAME="sampleservice"
            }
            steps
-           {  import groovy.json.JsonSlurper
+           {  
              script
              {   
                 //env.WORKSPACE = pwd()
-                 
+                 import groovy.json.JsonSlurper
                 REPOSITORY_URI= sh (script:"aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION} | jq .repositories[].repositoryUri | sed 's/\"//g' ",returnStdout: true).trim()
                 echo"repo $REPOSITORY_URI"
                 //IMAGE_UR=sh(script:"$REPOSITORY_URI:${BUILD_NUMBER}")
