@@ -19,17 +19,13 @@ pipeline{
             steps
             {
                 script
-                {
-                     NUM1= BUILD_NUMBER.toInteger()
-                     echo "Hello $NUM1"
-                     //Val= '1'.toInteger()
-                     //echo "H $Val"
-                     NUM2= (NUM1)-1
-                     //echo "num $NUM"  
-                     //sh "Value= $BUILD_NUMBER"
-                     //sh "Num =1"
-                     //sh "num1="$(($Value-$Num))""
-                      echo "Hi $NUM2"
+                {                     
+                    NUM1= BUILD_NUMBER.toInteger()
+                    echo "Hello $NUM1"                     
+                    NUM2= (NUM1)-1
+                    echo "Hi $NUM2"
+                    env.WORKSPACE = pwd()
+                    sh "rm ${env.WORKSPACE}/app-up-pvt-v_${NUM2}.json"
                     //sh "sed 's!will!appcom!g' pom.xml" 
                     //sh "login = sudo aws ecr get-login --no-include-email --region us-east-2"
                     //sh "eval $login"
