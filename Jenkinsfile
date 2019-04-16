@@ -23,7 +23,8 @@ pipeline{
                      //NUM= (BUILD_NUMBER-1)
                      //echo "num $NUM"  
                      sh "Value= $BUILD_NUMBER"
-                     sh "num1="$(($Value-1))""
+                     sh "Num =1"
+                     sh "num1="$(($Value-$Num))""
                       echo "num $num1"
                     //sh "sed 's!will!appcom!g' pom.xml" 
                     //sh "login = sudo aws ecr get-login --no-include-email --region us-east-2"
