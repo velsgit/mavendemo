@@ -2,24 +2,25 @@
 pipeline{
   agent any
   stages{
-      stage('build project')
-      {
-        steps
-        {
-          script
-          {            
-            def NUM= ${BUILD_NUMBER}-1
-            echo "Value is ${NUM}this"
-            sh "mvn clean install"
-          }
-        }
-      }
+      //stage('build project')
+      //{
+        //steps
+        //{
+          //script
+          //{            
+            //def NUM= ${BUILD_NUMBER}-1
+            //echo "Value is ${NUM}this"
+            //sh "mvn clean install"
+          //}
+        //}
+      //}
       stage('Docker Push')
         {
             steps
             {
                 script
                 {
+                     NUM= ${BUILD_NUMBER}-1
                                                     
                     //sh "sed 's!will!appcom!g' pom.xml" 
                     //sh "login = sudo aws ecr get-login --no-include-email --region us-east-2"
