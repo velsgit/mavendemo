@@ -23,7 +23,7 @@ pipeline{
                      NUM1= BUILD_NUMBER
                      echo "Hello $NUM1"
                      Val= 1
-                     NUM2= NUM1-Val
+                     NUM2= (NUM1-Val)
                      //echo "num $NUM"  
                      //sh "Value= $BUILD_NUMBER"
                      //sh "Num =1"
