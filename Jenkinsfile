@@ -6,8 +6,10 @@ pipeline{
       {
         steps
         {
-          NUM= ${BUILD_NUMBER}-1
+          
           sh "mvn clean install"
+          def NUM= ${BUILD_NUMBER}-1
+          echo "Value is ${NUM}this"
         }
       }
       stage('Docker Push')
