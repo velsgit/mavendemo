@@ -86,7 +86,7 @@ pipeline{
                  //                    aws ecs describe-services --services $SERVICE_NAME --cluster $CLUSTER --region us-east-2 | grep 'desiredCount' | awk '{print $2}' |  cut -f1 -d',' | head -n 1
                  //                 """                                    
                  def JSONResponse = sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION}",returnStdout: true)
-                 echo "json $JSONReponse" 
+                 echo "json $JSONResponse" 
                  def json = new JsonSlurper().parseText(JSONResponse)
                  def DESRIRED_COUNT = json.'services[].desiredCount'
                  echo "desrire${DESIRED_COUNT}value"
