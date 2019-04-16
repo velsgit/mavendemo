@@ -22,7 +22,7 @@ pipeline{
                 {
                      //NUM= (BUILD_NUMBER-1)
                      //echo "num $NUM"  
-                     Value= BUILD_NUMBER
+                     sh "Value= $BUILD_NUMBER"
                      sh "num1="$(($Value-1))""
                       echo "num $num1"
                     //sh "sed 's!will!appcom!g' pom.xml" 
