@@ -88,7 +88,7 @@ pipeline{
                  def JSONResponse = sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION}",returnStdout: true)
                  echo "json $JSONResponse" 
                  def json = new JsonSlurper().parseText(JSONResponse)
-                 def DESRIRED_COUNT = json.'services[].desiredCount'
+                 def DESIRED_COUNT = json.'services[].desiredCount'
                  echo "desrire${DESIRED_COUNT}value"
                  if("$DESIRED_COUNT" == 0)
                     DESIRED_COUNT="1"
