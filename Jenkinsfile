@@ -2,13 +2,14 @@
 pipeline{
   agent any
   stages{
-      ///stage('build project')
-      ///{
-       // steps
-        //{
-         // sh "mvn clean install"
-        //}
-      //}
+      stage('build project')
+      {
+        steps
+        {
+          NUM= ${BUILD_NUMBER}-1
+          sh "mvn clean install"
+        }
+      }
       stage('Docker Push')
         {
             steps
@@ -55,7 +56,9 @@ pipeline{
            steps
            {
              script
-             {               
+             {   
+                //env.WORKSPACE = pwd()
+                 
                 REPOSITORY_URI= sh (script:"aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION} | jq .repositories[].repositoryUri | sed 's/\"//g' ",returnStdout: true).trim()
                 echo"repo $REPOSITORY_URI"
                 //IMAGE_UR=sh(script:"$REPOSITORY_URI:${BUILD_NUMBER}")
