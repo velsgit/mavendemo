@@ -20,14 +20,15 @@ pipeline{
             {
                 script
                 {
-                     NUM= BUILD_NUMBER
+                     NUM1= BUILD_NUMBER
+                     echo "NUM1"
                      Value= 1
-                     NUMBER= BUILD_NUMBER-Value
+                     NUM2= NUM1-Value
                      //echo "num $NUM"  
                      //sh "Value= $BUILD_NUMBER"
                      //sh "Num =1"
                      //sh "num1="$(($Value-$Num))""
-                      echo "num $NUMBER"
+                      echo "Hi $NUM2"
                     //sh "sed 's!will!appcom!g' pom.xml" 
                     //sh "login = sudo aws ecr get-login --no-include-email --region us-east-2"
                     //sh "eval $login"
