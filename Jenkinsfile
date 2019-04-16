@@ -1,5 +1,6 @@
 import groovy.json.JsonSlurper
 pipeline{
+  import groovy.json.JsonSlurper
   agent any
   stages{
       stage('build project')
@@ -64,7 +65,7 @@ pipeline{
              script
              {   
                 //env.WORKSPACE = pwd()
-                 import groovy.json.JsonSlurper
+                 
                 REPOSITORY_URI= sh (script:"aws ecr describe-repositories --repository-names ${REPOSITORY_NAME} --region ${REGION} | jq .repositories[].repositoryUri | sed 's/\"//g' ",returnStdout: true).trim()
                 echo"repo $REPOSITORY_URI"
                 //IMAGE_UR=sh(script:"$REPOSITORY_URI:${BUILD_NUMBER}")
