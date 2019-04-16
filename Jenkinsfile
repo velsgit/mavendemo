@@ -20,7 +20,7 @@ pipeline{
             {
                 script
                 {
-                     NUM= BUILD_NUMBER-1
+                     NUM= (BUILD_NUMBER-1)
                      echo "num $NUM"                               
                     //sh "sed 's!will!appcom!g' pom.xml" 
                     //sh "login = sudo aws ecr get-login --no-include-email --region us-east-2"
