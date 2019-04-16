@@ -1,4 +1,4 @@
-
+import groovy.json.JsonSlurper
 pipeline{
   agent any
   stages{
@@ -60,7 +60,7 @@ pipeline{
               SERVICE_NAME="sampleservice"
            }
            steps
-           {
+           {  import groovy.json.JsonSlurper
              script
              {   
                 //env.WORKSPACE = pwd()
@@ -81,13 +81,13 @@ pipeline{
                 if("$SERVICES" == "")               
                 {
                  echo "entered existing service"
-                 DESIRED_COUNT=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .services[].desiredCount",returnStdout: true)
+                 //DESIRED_COUNT=sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .services[].desiredCount",returnStdout: true)
                  //DESIRED_COUNT= sh """#!/bin/bash
                  //                    aws ecs describe-services --services $SERVICE_NAME --cluster $CLUSTER --region us-east-2 | grep 'desiredCount' | awk '{print $2}' |  cut -f1 -d',' | head -n 1
                  //                 """                                    
-                 //def JSONResponse = sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION}",returnStdout: true)
-                 //def json = new JsonSlurper().parseText(JSONResponse)
-                 //def DESRIRED_COUNT = json.'services[].desiredCount'
+                 def JSONResponse = sh (script:"aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION}",returnStdout: true)
+                 def json = new JsonSlurper().parseText(JSONResponse)
+                 def DESRIRED_COUNT = json.'services[].desiredCount'
                  echo "desrire${DESIRED_COUNT}value"
                  if("$DESIRED_COUNT" == 0)
                     DESIRED_COUNT="1"
