@@ -20,9 +20,9 @@ pipeline{
             {
                 script
                 {
-                     NUM1= BUILD_NUMBER as integer 
+                     NUM1= BUILD_NUMBER.toInteger()
                      echo "Hello $NUM1"
-                     Val= '1' as integer 
+                     Val= '1'.toInteger()
                      echo "H $Val"
                      NUM2= (NUM1)-(Val)
                      //echo "num $NUM"  
