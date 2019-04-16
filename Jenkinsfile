@@ -20,11 +20,11 @@ pipeline{
             {
                 script
                 {
-                     NUM1= BUILD_NUMBER
+                     NUM1= BUILD_NUMBER as integer 
                      echo "Hello $NUM1"
-                     Val= 1
+                     Val= '1' as integer 
                      echo "H $Val"
-                     NUM2= (NUM1-Val)
+                     NUM2= (NUM1)-(Val)
                      //echo "num $NUM"  
                      //sh "Value= $BUILD_NUMBER"
                      //sh "Num =1"
