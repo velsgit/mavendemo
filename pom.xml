@@ -15,7 +15,7 @@
       <annotatedJdk>${org.checkerframework:jdk8:jar}</annotatedJdk>
       <sonar.host.url>http://192.168.106.183:9000</sonar.host.url>
       <sonar.projectKey>javapipe</sonar.projectKey>
-      <sonar.projectName>declarativepipe</sonar.projectName>   
+      <sonar.projectName>declarative_multi-branch-pipeline</sonar.projectName>   
   </properties>
 
   <dependencies>	  
