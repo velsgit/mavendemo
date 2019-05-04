@@ -6,7 +6,7 @@ pipeline{
       {
         steps
         {         
-          sh "mvn clean install"          
+          sh "sudo mvn clean install"          
         }
       }
       stage('Sonarqube Analysis'){
@@ -15,7 +15,7 @@ pipeline{
         }
         steps {
           withSonarQubeEnv('SonarQube Scanner') {
-             sh 'mvn sonar:sonar'               
+             sh 'sudo mvn sonar:sonar'               
           }
         }
       }
