@@ -5,7 +5,7 @@ pipeline{
       stage('build project')
       {
         steps
-        {         
+        {  sh "cd /test"       
           sh "sudo mvn clean install"          
         }
       }
